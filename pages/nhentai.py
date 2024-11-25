@@ -1,3 +1,4 @@
+from os import chmod
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -25,6 +26,7 @@ st.title("nhentai")
 
 if st.button("Launch nhentai"):
 	PATH = "drivers/chromedriver.exe"
+	chmod(PATH, 0o777)
 	service = Service(PATH)
 	driver = webdriver.Chrome(service=service)
 

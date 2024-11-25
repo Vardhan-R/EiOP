@@ -26,7 +26,7 @@ st.title("nhentai")
 
 if st.button("Launch nhentai"):
 	PATH = "drivers/chromedriver.exe"
-	chmod(PATH, 0o777)
+	chmod(PATH, 0o755)
 	service = Service(PATH)
 	driver = webdriver.Chrome(service=service)
 

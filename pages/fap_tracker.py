@@ -1,7 +1,6 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
-# import tracker
 
 from calendar import timegm
 from datetime import datetime
@@ -30,6 +29,11 @@ class Tracker:
 
 		for clr in [cmap(int((i + 1) * 255 / max_faps)) for i in range(max_faps)]:
 			custom_clrs.append(f"#{hexify(int(clr[0] * 255))}{hexify(int(clr[1] * 255))}{hexify(int(clr[2] * 255))}")
+
+		# custom_clrs = ["#C0C0C0", "#808080", "#FFFFFF"]
+		# for i in range(max_faps):
+		# 	x = int(i * 255 / max_faps)
+		# 	custom_clrs.append(f"#{hexify(255 - x)}{hexify(255 - int(x / 1.75))}FF")
 
 		return custom_clrs
 
@@ -120,7 +124,7 @@ def disp():
 	st.write(c)
 
 if "tracker" not in st.session_state:
-	st.session_state.tracker = tracker.Tracker()
+	st.session_state.tracker = Tracker()
 
 	# x, y, z = st.session_state.tracker.rawGetCounts(r"./_chat.txt", 2024, 7, 23)
 	# st.session_state.tracker.saveCounts("./cnts.txt")

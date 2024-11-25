@@ -13,8 +13,10 @@ title = "Everything in One Place."
 # 			time.sleep(0.05)
 
 if "logged_in" not in st.session_state:
-	st.session_state.logged_in = False
-	st.session_state.username = None
+	# st.session_state.logged_in = False
+	# st.session_state.username = None
+	st.session_state.logged_in = True
+	st.session_state.username = "nonames"
 
 st.set_page_config(page_title="Home")
 st.title(title)
@@ -26,7 +28,8 @@ st.page_link("st_tst_3.py", label="Home", icon="🏠")
 if is_disabled:
 	st.page_link("pages/login.py", label="Login", icon="👤")
 st.page_link("pages/fap_tracker.py", label="Fap Tracker", icon="💦", disabled=is_disabled)
-st.page_link("pages/nhentai.py", label="nhentai", icon="🌚", disabled=is_disabled)
+st.page_link("pages/nhentai.py", label="nhentai", icon="🌚", disabled=True)
+st.page_link("pages/chat.py", label="Chat", icon="💬", disabled=is_disabled)
 st.page_link("pages/file_sharing.py", label="File Sharing", icon="📝", disabled=is_disabled)
 
 if st.session_state.logged_in:

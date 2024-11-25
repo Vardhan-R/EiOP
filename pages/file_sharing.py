@@ -12,7 +12,7 @@ files_path = "pages/common/shared_files"
 
 st.title("Share Files")
 
-col_1, col_2 = st.columns([1, 1])	# Adjust column ratios as needed
+col_1, col_2 = st.columns([1, 1])
 
 with col_1:
 	st.header("Download Files")
@@ -22,4 +22,4 @@ with col_2:
 	st.header("Upload Files")
 	st.write("Coming soon...")
 
-st.page_link("st_tst_3.py", label="Home", icon="🏠")
+st.page_link("st_tst_3.py", label="Back to Home", icon="🏠")

@@ -5,12 +5,16 @@ import streamlit as st
 # import streamlit.components.v1 as components
 import time
 
+# # embed streamlit docs in a streamlit app
+# components.iframe("https://youtube.com", height=500)
+
 logs_path = "pages/common/logs"
 
 st.set_page_config(page_title="nhentai")
 
-# # embed streamlit docs in a streamlit app
-# components.iframe("https://youtube.com", height=500)
+st.switch_page("pages/403_forbidden.py")
+
+"""THE SCRIPT ESSENTIALLY ENDS HERE"""
 
 if "logged_in" in st.session_state:
 	if not st.session_state.logged_in:

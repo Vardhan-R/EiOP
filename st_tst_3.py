@@ -13,10 +13,8 @@ title = "Everything in One Place."
 # 			time.sleep(0.05)
 
 if "logged_in" not in st.session_state:
-	# st.session_state.logged_in = False
-	# st.session_state.username = None
-	st.session_state.logged_in = True
-	st.session_state.username = "nonames"
+	st.session_state.logged_in = False
+	st.session_state.username = None
 
 st.set_page_config(page_title="Home")
 st.title(title)

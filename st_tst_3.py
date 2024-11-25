@@ -1,5 +1,4 @@
 import streamlit as st
-# import time
 
 title = "Everything in One Place."
 # st.markdown("<h3 style='font-family:Arial; color:green;'>User Data</h3>", unsafe_allow_html=True)

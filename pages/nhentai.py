@@ -12,7 +12,7 @@ logs_path = "pages/common/logs"
 
 st.set_page_config(page_title="nhentai")
 
-st.switch_page("pages/403_forbidden.py")
+# st.switch_page("pages/403_forbidden.py")
 
 """THE SCRIPT ESSENTIALLY ENDS HERE"""
 

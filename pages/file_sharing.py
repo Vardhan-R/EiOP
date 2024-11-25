@@ -44,6 +44,7 @@ with col_2:
 			btn = st.download_button(
 				label=file_name,
 				data=file,
+				file_name=file_name,
 				key=i,
 				icon='✨'
 			)

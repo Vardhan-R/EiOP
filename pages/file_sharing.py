@@ -11,10 +11,12 @@ else:
 
 files_path = "pages/common/shared_files"
 
-st.title("Share Files")
+col_1, col_2 = st.columns([4, 1])
 
-_, rgt_col = st.columns([4, 1])
-with rgt_col:
+with col_1:
+	st.title("Share Files")
+
+with col_2:
 	st.page_link("st_tst_3.py", label="Back to Home", icon="🏠")
 
 col_1, col_2 = st.columns([1, 1])

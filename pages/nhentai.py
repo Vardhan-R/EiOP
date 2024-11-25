@@ -22,11 +22,19 @@ if "logged_in" in st.session_state:
 else:
 	st.switch_page("st_tst_3.py")
 
-st.title("nhentai")
+col_1, col_2 = st.columns([4, 1])
 
-if st.button("Launch nhentai"):
+with col_1:
+	st.title("nhentai")
+
+with col_2:
+	st.page_link("st_tst_3.py", label="Back to Home", icon="🏠")
+
+st.write("Selenium doesn't work to well with Streamlit on the server's side. Hence, this bit is disabled for now.")
+
+if st.button("Launch nhentai", disabled=True):
 	PATH = "drivers/chromedriver.exe"
-	chmod(PATH, 0o755)
+	chmod(PATH, 0o777)
 	service = Service(PATH)
 	driver = webdriver.Chrome(service=service)
 

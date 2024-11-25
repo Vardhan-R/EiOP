@@ -1,14 +1,15 @@
 # EiOP
-Everything in One Place
+Everything in One Place!
 
 ## To Do
-### web
-- use for logs only (disp logs)
+### Login
+- "Remember me"
 
-### file sharing
-- text
-- upload
-- download
+### Fap Tracker
+- Timezone coordination
 
-## new stuff
-- SC scraper/logger
+### nhentai
+- Use for logs only (disp logs)
+
+## New Stuff
+- Stripchat scraper/logger

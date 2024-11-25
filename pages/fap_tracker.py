@@ -1,17 +1,17 @@
-import altair as alt
-import pandas as pd
-import streamlit as st
-
 from calendar import timegm
 from datetime import datetime
 from matplotlib import colormaps
 from time import time
+import altair as alt
 import numpy as np
+import pandas as pd
+import streamlit as st
 
 class Tracker:
 	def __init__(self) -> None:
 		self.xx_mesh, self.yy_mesh = np.mgrid[1:32, 1:13]
 		self.all_cnts = np.zeros((31, 12))
+		self.tz_offset = 0	# in days
 
 	def convertRawData(self, input_file: str, output_file: str, yy_0: int, mm_0: int, dd_0: int):
 		self.rawGetCounts(input_file, yy_0, mm_0, dd_0)
@@ -50,10 +50,9 @@ class Tracker:
 
 		# yy_0, mm_0, dd_0 = 2024, 7, 23
 		ref_uts = timegm(datetime(yy_0, mm_0, dd_0, 0, 0, 0).timetuple())
-		curr_uts = int(time())
+		curr_uts = int(time()) + SECS_PER_DAY * self.tz_offset
 		mm_curr, dd_curr = map(int, datetime.fromtimestamp(curr_uts).strftime("%m %d").split(' '))
 
-		SECS_PER_DAY = 86400
 		n_days = int((curr_uts - ref_uts) // SECS_PER_DAY + 2)
 		print(ref_uts, curr_uts, n_days)
 		cnts = [0] * n_days
@@ -86,10 +85,13 @@ class Tracker:
 		return True
 
 	def updateCounts(self, diff: int) -> tuple:
-		curr_uts = int(time())
+		curr_uts = int(time()) + SECS_PER_DAY * self.tz_offset
 		mm_curr, dd_curr = map(int, datetime.fromtimestamp(curr_uts).strftime("%m %d").split(' '))
 		self.all_cnts[dd_curr - 1, mm_curr - 1] = max(self.all_cnts[dd_curr - 1, mm_curr - 1] + diff, 0.0)
 		return self.xx_mesh, self.yy_mesh, self.all_cnts
+
+	def updateTzOffset(self, diff: int) -> None:
+		self.tz_offset = max(min(self.tz_offset + diff, 1), -1)
 
 st.set_page_config(page_title="Fap Tracker")
 
@@ -97,8 +99,10 @@ if "logged_in" in st.session_state:
 	if not st.session_state.logged_in:
 		st.switch_page("pages/403_forbidden.py")
 else:
-	st.switch_page("st_tst_3.py")
+	st.switch_page("home.py")
 
+SECS_PER_DAY = 86_400
+MONTHS = {"1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun", "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"}
 cnts_path = "pages/common/cnts.txt"
 
 def disp():
@@ -132,20 +136,33 @@ if "tracker" not in st.session_state:
 
 st.title("Fap Tracker (2024)")
 
-col_1, col_2, col_3 = st.columns([1, 1, 5])	# Adjust column ratios as needed
+cols = st.columns([1, 1, 2, 1, 1, 1])	# Adjust column ratios as needed
 
-with col_1:
+with cols[0]:
 	if st.button("+1"):
 		st.session_state.tracker.updateCounts(1)
 
-with col_2:
+with cols[1]:
 	if st.button("-1"):
 		st.session_state.tracker.updateCounts(-1)
 
-with col_3:
+with cols[2]:
 	if st.button("Save data"):
 		st.session_state.tracker.saveCounts(cnts_path)
 
+with cols[3]:
+	if st.button("◀", disabled=st.session_state.tracker.tz_offset < 0):
+		st.session_state.tracker.updateTzOffset(-1)
+
+with cols[4]:
+	curr_uts = int(time()) + SECS_PER_DAY * st.session_state.tracker.tz_offset
+	mm_curr, dd_curr = datetime.fromtimestamp(curr_uts).strftime("%m, %d").split(',')
+	st.write(MONTHS[mm_curr] + dd_curr)
+
+with cols[5]:
+	if st.button("▶", disabled=st.session_state.tracker.tz_offset > 0):
+		st.session_state.tracker.updateTzOffset(1)
+
 disp()
 
-st.page_link("st_tst_3.py", label="Back to Home", icon="🏠")
+st.page_link("home.py", label="Back to Home", icon="🏠")

@@ -14,13 +14,13 @@ logs_path = "pages/common/logs"
 st.set_page_config(page_title="nhentai")
 
 # st.switch_page("pages/403_forbidden.py")
-# THIS SCRIPT ESSENTIALLY ENDS HERE
+# # THIS SCRIPT ESSENTIALLY ENDS HERE
 
 if "logged_in" in st.session_state:
 	if not st.session_state.logged_in:
 		st.switch_page("pages/403_forbidden.py")
 else:
-	st.switch_page("st_tst_3.py")
+	st.switch_page("home.py")
 
 col_1, col_2 = st.columns([4, 1])
 
@@ -28,7 +28,7 @@ with col_1:
 	st.title("nhentai")
 
 with col_2:
-	st.page_link("st_tst_3.py", label="Back to Home", icon="🏠")
+	st.page_link("home.py", label="Back to Home", icon="🏠")
 
 st.write("Selenium doesn't work to well with Streamlit on the server's side. Hence, this bit is disabled for now.")
 

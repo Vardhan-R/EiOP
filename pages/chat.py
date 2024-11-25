@@ -7,7 +7,7 @@ if "logged_in" in st.session_state:
 	if not st.session_state.logged_in:
 		st.switch_page("pages/403_forbidden.py")
 else:
-	st.switch_page("st_tst_3.py")
+	st.switch_page("home.py")
 
 chat_path = "pages/common/chat.txt"
 
@@ -43,4 +43,4 @@ with lft_col:
 		st.session_state.disp_msgs = min(2 * st.session_state.disp_msgs, len(st.session_state.messages))
 
 with rgt_col:
-	st.page_link("st_tst_3.py", label="Back to Home", icon="🏠")
+	st.page_link("home.py", label="Back to Home", icon="🏠")

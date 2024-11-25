@@ -23,7 +23,7 @@ if "logged_in" in st.session_state:
 							st.session_state.username = username
 							st.session_state.logged_in = True
 							st.write("Logging in...")
-							st.switch_page("st_tst_3.py")
+							st.switch_page("home.py")
 						else:
 							st.write("Incorrect password.")
 					except ValueError:
@@ -33,8 +33,4 @@ if "logged_in" in st.session_state:
 else:
 	st.write("Something's not right... please visit the homepage by clicking on the link below.")
 
-st.page_link("st_tst_3.py", label="Back to Home", icon="🏠")
-# st.page_link("pages/login.py", label="Login", icon="👤")
-# st.page_link("pages/page_1.py", label="Page 1", icon="1️⃣")
-# st.page_link("pages/page_2.py", label="Page 2", icon="2️⃣")
-# st.page_link("http://www.google.co.in", label="Google", icon="🌎")
+st.page_link("home.py", label="Back to Home", icon="🏠")

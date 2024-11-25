@@ -7,7 +7,7 @@ if "logged_in" in st.session_state:
 	if not st.session_state.logged_in:
 		st.switch_page("pages/403_forbidden.py")
 else:
-	st.switch_page("st_tst_3.py")
+	st.switch_page("home.py")
 
 files_path = "pages/common/shared_files"
 
@@ -17,7 +17,7 @@ with col_1:
 	st.title("Share Files")
 
 with col_2:
-	st.page_link("st_tst_3.py", label="Back to Home", icon="🏠")
+	st.page_link("home.py", label="Back to Home", icon="🏠")
 
 col_1, col_2 = st.columns([1, 1])
 

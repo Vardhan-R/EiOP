@@ -13,8 +13,7 @@ logs_path = "pages/common/logs"
 st.set_page_config(page_title="nhentai")
 
 # st.switch_page("pages/403_forbidden.py")
-
-"""THE SCRIPT ESSENTIALLY ENDS HERE"""
+# THIS SCRIPT ESSENTIALLY ENDS HERE
 
 if "logged_in" in st.session_state:
 	if not st.session_state.logged_in:
@@ -25,7 +24,7 @@ else:
 st.title("nhentai")
 
 if st.button("Launch nhentai"):
-	PATH = "C:\\Program Files (x86)\\chromedriver.exe"
+	PATH = "drivers/chromedriver.exe"
 	service = Service(PATH)
 	driver = webdriver.Chrome(service=service)
 

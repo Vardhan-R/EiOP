@@ -3,7 +3,6 @@ import time
 
 EXP_USRN = "nonames"	# expected username
 PSWD_TOL = 86400		# password tolerance
-PSWD_TOL = 1e11			# password tolerance
 
 st.set_page_config(page_title="Login")
 

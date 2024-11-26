@@ -21,7 +21,7 @@ def getAnonymousCookieID() -> str | None:
 	except Exception as e:
 		return None
 
-	st.write(session_info.request.headers)
+	# st.write(session_info.request.headers)
 	try:
 		cookies = session_info.request.headers["Cookie"].split("; ")
 		for cookie in cookies:
@@ -40,7 +40,7 @@ if "logged_in" in st.session_state:
 		with st.form("creds"):
 			username = st.text_input("Username", placeholder="Username")
 			password = st.text_input("Password", type="password", placeholder="Password")
-			remember = st.checkbox("Remember me")
+			remember = st.checkbox("Remember me", disabled=True, help="Feature disabled")
 
 			submitted = st.form_submit_button()
 			if submitted:

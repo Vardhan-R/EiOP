@@ -32,7 +32,7 @@ with col_2:
 
 st.write("Selenium doesn't work to well with Streamlit on the server's side. Hence, this bit is disabled for now.")
 
-if st.button("Launch nhentai", disabled=True):
+if st.button("Launch nhentai", disabled=True, help="Feature disabled"):
 	PATH = "drivers/chromedriver.exe"
 	chmod(PATH, 0o777)
 	service = Service(PATH)

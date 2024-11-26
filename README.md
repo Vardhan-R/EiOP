@@ -2,7 +2,11 @@
 Everything in One Place!
 
 ## To Do
+### Work Flow
+- Create different branches
+
 ### Login
+- "Remember me" (try using cookies)
 
 ### Fap Tracker
 - Timezone coordination

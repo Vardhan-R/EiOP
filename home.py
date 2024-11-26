@@ -1,8 +1,29 @@
-from uuid import getnode as getMACAddr
+from streamlit import runtime
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 import streamlit as st
 
+def getAnonymousCookieID() -> str | None:
+	"""Get remote ip."""
+
+	try:
+		ctx = get_script_run_ctx()
+		if ctx is None:
+			return None
+
+		session_info = runtime.get_instance().get_client(ctx.session_id)
+		if session_info is None:
+			return None
+	except Exception as e:
+		return None
+
+	cookies = session_info.request.headers["Cookie"].split("; ")
+	for cookie in cookies:
+		cookie_type, cookie_id = cookie.split("=")
+		if cookie_type == "ajs_anonymous_id":
+			return cookie_id
+
 title = "Everything in One Place."
-devices_path = "pages/common/devices.txt"
+cookies_path = "pages/common/cookies.txt"
 # st.markdown("<h3 style='font-family:Arial; color:green;'>User Data</h3>", unsafe_allow_html=True)
 
 # def streamData():
@@ -23,11 +44,12 @@ if "logged_in" not in st.session_state:
 	st.session_state.username = None
 
 # Remember device?
-mac = str(getMACAddr())
-with open(devices_path, 'r') as fp:
+cookie_id = getAnonymousCookieID()
+
+with open(cookies_path, 'r') as fp:
 	while line := fp.readline():
-		stored_mac, stored_username = line.strip().split(' ')
-		if mac == stored_mac:	# remember
+		stored_cookie_id, stored_username = line.strip().split(' ')
+		if cookie_id == stored_cookie_id:	# remember
 			st.session_state.logged_in = True
 			st.session_state.username = stored_username
 
@@ -47,13 +69,13 @@ if st.session_state.logged_in:
 		st.session_state.username = None
 
 		all_rems = []
-		with open(devices_path, 'r') as fp:
+		with open(cookies_path, 'r') as fp:
 			while line := fp.readline():
-				stored_mac, stored_username = line.strip().split(' ')
-				if mac != stored_mac:	# remembered
+				stored_cookie_id, stored_username = line.strip().split(' ')
+				if cookie_id != stored_cookie_id:	# remembered
 					all_rems.append(line)
 
-		with open(devices_path, 'w') as fp:
+		with open(cookies_path, 'w') as fp:
 			fp.writelines(all_rems)
 
 		st.switch_page("home.py")

@@ -1,10 +1,31 @@
-from uuid import getnode as getMACAddr
+from streamlit import runtime
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 import streamlit as st
 import time
 
 EXP_USRN = "nonames"	# expected username
 PSWD_TOL = 86400		# password tolerance
-devices_path = "pages/common/devices.txt"
+cookies_path = "pages/common/devices.txt"
+
+def getAnonymousCookieID() -> str | None:
+	"""Get remote ip."""
+
+	try:
+		ctx = get_script_run_ctx()
+		if ctx is None:
+			return None
+
+		session_info = runtime.get_instance().get_client(ctx.session_id)
+		if session_info is None:
+			return None
+	except Exception as e:
+		return None
+
+	cookies = session_info.request.headers["Cookie"].split("; ")
+	for cookie in cookies:
+		cookie_type, cookie_id = cookie.split("=")
+		if cookie_type == "ajs_anonymous_id":
+			return cookie_id
 
 st.set_page_config(page_title="Login")
 
@@ -27,9 +48,9 @@ if "logged_in" in st.session_state:
 							st.session_state.logged_in = True
 
 							if remember:
-								mac = getMACAddr()
-								with open(devices_path, 'a') as fp:
-									fp.write(f"{mac} {username}\n")
+								cookie_id = getAnonymousCookieID()
+								with open(cookies_path, 'a') as fp:
+									fp.write(f"{cookie_id} {username}\n")
 
 							st.write("Logging in...")
 							st.switch_page("home.py")

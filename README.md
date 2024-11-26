@@ -6,6 +6,7 @@ Everything in One Place!
 
 ### Fap Tracker
 - Timezone coordination
+- Detailed log (with timestamps)
 
 ### nhentai
 - Use for logs only (disp logs)

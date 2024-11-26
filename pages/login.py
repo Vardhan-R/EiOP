@@ -21,6 +21,7 @@ def getAnonymousCookieID() -> str | None:
 	except Exception as e:
 		return None
 
+	st.write(session_info.request.headers)
 	cookies = session_info.request.headers["Cookie"].split("; ")
 	for cookie in cookies:
 		cookie_type, cookie_id = cookie.split("=")

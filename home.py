@@ -16,11 +16,15 @@ def getAnonymousCookieID() -> str | None:
 	except Exception as e:
 		return None
 
-	cookies = session_info.request.headers["Cookie"].split("; ")
-	for cookie in cookies:
-		cookie_type, cookie_id = cookie.split("=")
-		if cookie_type == "ajs_anonymous_id":
-			return cookie_id
+	st.write(session_info.request.headers)
+	try:
+		cookies = session_info.request.headers["Cookie"].split("; ")
+		for cookie in cookies:
+			cookie_type, cookie_id = cookie.split("=")
+			if cookie_type == "ajs_anonymous_id":
+				return cookie_id
+	except Exception as e:
+		return None
 
 title = "Everything in One Place."
 cookies_path = "pages/common/cookies.txt"

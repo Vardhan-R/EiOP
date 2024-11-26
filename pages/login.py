@@ -22,11 +22,14 @@ def getAnonymousCookieID() -> str | None:
 		return None
 
 	st.write(session_info.request.headers)
-	cookies = session_info.request.headers["Cookie"].split("; ")
-	for cookie in cookies:
-		cookie_type, cookie_id = cookie.split("=")
-		if cookie_type == "ajs_anonymous_id":
-			return cookie_id
+	try:
+		cookies = session_info.request.headers["Cookie"].split("; ")
+		for cookie in cookies:
+			cookie_type, cookie_id = cookie.split("=")
+			if cookie_type == "ajs_anonymous_id":
+				return cookie_id
+	except Exception as e:
+		return None
 
 st.set_page_config(page_title="Login")
 

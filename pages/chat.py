@@ -32,15 +32,17 @@ if msg := st.chat_input("Thots?"):
 	with open(chat_path, 'a') as fp:
 		fp.write(s)
 
-with mid_col:
-	# Display chat history
-	for uts_msg in st.session_state.messages[-st.session_state.disp_msgs:]:
-		messages.chat_message("user").write(uts_msg)
-
 with lft_col:
 	# Load more messages
 	if st.button("Load more messages"):
-		st.session_state.disp_msgs = min(2 * st.session_state.disp_msgs, len(st.session_state.messages))
+		st.session_state.disp_msgs = max(min(2 * st.session_state.disp_msgs, len(st.session_state.messages)), 10)
+
+with mid_col:
+	# Display chat history
+	with open(chat_path, 'r') as fp:
+		st.session_state.messages = fp.readlines()  # A list to store message history
+	for uts_msg in st.session_state.messages[-st.session_state.disp_msgs:]:
+		messages.chat_message("user").write(uts_msg)
 
 with rgt_col:
 	st.page_link("home.py", label="Back to Home", icon="🏠")

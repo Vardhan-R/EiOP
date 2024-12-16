@@ -54,7 +54,6 @@ class Tracker:
 		mm_curr, dd_curr = map(int, datetime.fromtimestamp(curr_uts).strftime("%m %d").split(' '))
 
 		n_days = int((curr_uts - ref_uts) // SECS_PER_DAY + 2)
-		print(ref_uts, curr_uts, n_days)
 		cnts = [0] * n_days
 		# dates = [tuple(map(int, datetime.fromtimestamp(ref_uts + i * SECS_PER_DAY).strftime("%m %d").split(' '))) for i in range(n_days)]
 
@@ -78,8 +77,6 @@ class Tracker:
 						uts = timegm(datetime(yy, mm, dd).timetuple())
 					cnts[int((uts - ref_uts) // SECS_PER_DAY)] += 1
 					self.all_cnts[dd - 1, mm - 1] += 1
-
-		print(self.all_cnts)
 
 		return self.xx_mesh, self.yy_mesh, self.all_cnts
 

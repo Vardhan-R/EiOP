@@ -11,6 +11,7 @@ Everything in One Place!
 ### Fap Tracker
 - Timezone coordination
 - Detailed log (with timestamps)
+- Tracker for 2025
 
 ### nhentai
 - Use for logs only (disp logs)
@@ -24,3 +25,4 @@ Everything in One Place!
 
 ## New Stuff
 - Stripchat scraper/logger
+- Gym tracker

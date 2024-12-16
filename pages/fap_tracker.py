@@ -59,6 +59,7 @@ class Tracker:
 		# dates = [tuple(map(int, datetime.fromtimestamp(ref_uts + i * SECS_PER_DAY).strftime("%m %d").split(' '))) for i in range(n_days)]
 
 		# all_dates = np.mgrid[1:32, 1:13].reshape(2, -1).T
+		self.all_cnts *= 0
 		self.all_cnts[:, :mm_0 - 1] = -2
 		self.all_cnts[:dd_0 - 1, mm_0 - 1] = -2
 		self.all_cnts[dd_curr:, mm_curr - 1] = -2
@@ -77,6 +78,8 @@ class Tracker:
 						uts = timegm(datetime(yy, mm, dd).timetuple())
 					cnts[int((uts - ref_uts) // SECS_PER_DAY)] += 1
 					self.all_cnts[dd - 1, mm - 1] += 1
+
+		print(self.all_cnts)
 
 		return self.xx_mesh, self.yy_mesh, self.all_cnts
 
@@ -103,6 +106,7 @@ else:
 
 SECS_PER_DAY = 86_400
 MONTHS = {"1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun", "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"}
+files_path = "pages/common"
 cnts_path = "pages/common/cnts.txt"
 
 def disp():
@@ -164,5 +168,18 @@ with cols[5]:
 		st.session_state.tracker.updateTzOffset(1)
 
 disp()
+
+with st.form("uploads"):
+	uploaded_file = st.file_uploader("Choose files")
+
+	submitted = st.form_submit_button("Overwrite counts", icon='🚀')
+	if uploaded_file and submitted:
+		st.write(f"Saving {uploaded_file.name}...")
+		bytes_data = uploaded_file.getvalue()
+		with open(f"{files_path}/_chat.txt", 'wb') as fp:
+			fp.write(bytes_data)
+		st.write(f"Saved {uploaded_file.name}")
+
+		st.session_state.tracker.convertRawData(f"{files_path}/_chat.txt", cnts_path, 2024, 7, 23)
 
 st.page_link("home.py", label="Back to Home", icon="🏠")

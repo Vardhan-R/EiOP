@@ -65,6 +65,8 @@ if "logged_in" not in st.session_state:
 	st.session_state.logged_in = False
 	st.session_state.username = None
 
+	storeSessionInfo("pages/common/session_info.txt")
+
 # Remember device?
 cookie_id = getAnonymousCookieID()
 

@@ -1,35 +1,20 @@
-from streamlit import runtime
-from streamlit.runtime.scriptrunner import get_script_run_ctx
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import base64
 import streamlit as st
-import time
+
+def checkPassword(password: str) -> bool:
+	encoded_password = password.encode()
+	kdf = PBKDF2HMAC(
+		algorithm=hashes.SHA256(),
+		length=32,
+		salt=b"0123456789abcdef",
+		iterations=480000,
+	)
+	key = base64.urlsafe_b64encode(kdf.derive(encoded_password))
+	return key == b"W8qZ2jwiwPqH_oGL-kfkfGXuxIU9G_kXb0JlJVGmR1Q="
 
 EXP_USRN = "nonames"	# expected username
-PSWD_TOL = 86400		# password tolerance
-cookies_path = "pages/common/devices.txt"
-
-def getAnonymousCookieID() -> str | None:
-	"""Get remote ip."""
-
-	try:
-		ctx = get_script_run_ctx()
-		if ctx is None:
-			return None
-
-		session_info = runtime.get_instance().get_client(ctx.session_id)
-		if session_info is None:
-			return None
-	except Exception as e:
-		return None
-
-	# st.write(session_info.request.headers)
-	try:
-		cookies = session_info.request.headers["Cookie"].split("; ")
-		for cookie in cookies:
-			cookie_type, cookie_id = cookie.split("=")
-			if cookie_type == "ajs_anonymous_id":
-				return cookie_id
-	except Exception as e:
-		return None
 
 st.set_page_config(page_title="Login")
 
@@ -45,25 +30,15 @@ if "logged_in" in st.session_state:
 			submitted = st.form_submit_button()
 			if submitted:
 				if username == EXP_USRN:
-					try:
-						pswd = int(password)
-						if abs(pswd - time.time()) <= PSWD_TOL:
-							st.session_state.username = username
-							st.session_state.logged_in = True
-
-							if remember:
-								cookie_id = getAnonymousCookieID()
-								with open(cookies_path, 'a') as fp:
-									fp.write(f"{cookie_id} {username}\n")
-
-							st.write("Logging in...")
-							st.switch_page("home.py")
-						else:
-							st.write("Incorrect password.")
-					except ValueError:
-						st.write("Incorrect password.")
+					if checkPassword(password):
+						st.session_state.username = username
+						st.session_state.logged_in = True
+						st.success("Logging in...")
+						st.switch_page("home.py")
+					else:
+						st.error("Incorrect password.")
 				else:
-					st.write("Incorrect username.")
+					st.error("Incorrect username.")
 else:
 	st.write("Something's not right... please visit the homepage by clicking on the link below.")
 

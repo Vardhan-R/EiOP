@@ -45,4 +45,4 @@ with mid_col:
 		messages.chat_message("user").write(uts_msg)
 
 with rgt_col:
-	st.page_link("home.py", label="Back to Home", icon="🏠")
+	st.page_link("home.py", label="Back to Home", icon='🏠')

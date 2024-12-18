@@ -28,7 +28,7 @@ with col_1:
 	st.title("nhentai")
 
 with col_2:
-	st.page_link("home.py", label="Back to Home", icon="🏠")
+	st.page_link("home.py", label="Back to Home", icon='🏠')
 
 st.write("Selenium doesn't work to well with Streamlit on the server's side. Hence, this bit is disabled for now.")
 

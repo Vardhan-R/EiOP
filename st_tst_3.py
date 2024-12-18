@@ -21,13 +21,13 @@ st.title(title)
 
 is_disabled = not st.session_state.logged_in
 
-st.page_link("st_tst_3.py", label="Home", icon="🏠")
+st.page_link("st_tst_3.py", label="Home", icon='🏠')
 if is_disabled:
-	st.page_link("pages/login.py", label="Login", icon="👤")
-st.page_link("pages/fap_tracker.py", label="Fap Tracker", icon="💦", disabled=is_disabled)
-st.page_link("pages/nhentai.py", label="nhentai", icon="🌚", disabled=is_disabled)
-st.page_link("pages/chat.py", label="Chat", icon="💬", disabled=is_disabled)
-st.page_link("pages/file_sharing.py", label="File Sharing", icon="📝", disabled=is_disabled)
+	st.page_link("pages/login.py", label="Login", icon='👤')
+st.page_link("pages/fap_tracker.py", label="Fap Tracker", icon='💦', disabled=is_disabled)
+st.page_link("pages/nhentai.py", label="nhentai", icon='🌚', disabled=is_disabled)
+st.page_link("pages/chat.py", label="Chat", icon='💬', disabled=is_disabled)
+st.page_link("pages/file_sharing.py", label="File Sharing", icon='📝', disabled=is_disabled)
 
 if st.session_state.logged_in:
 	if st.button("Logout"):

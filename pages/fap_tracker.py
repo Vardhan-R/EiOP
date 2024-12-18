@@ -166,7 +166,7 @@ with cols[5]:
 
 disp()
 
-with st.form("uploads"):
+with st.form("upload"):
 	uploaded_file = st.file_uploader("Choose files")
 
 	submitted = st.form_submit_button("Overwrite counts", icon='🚀')
@@ -179,4 +179,4 @@ with st.form("uploads"):
 
 		st.session_state.tracker.convertRawData(f"{files_path}/_chat.txt", cnts_path, 2024, 7, 23)
 
-st.page_link("home.py", label="Back to Home", icon="🏠")
+st.page_link("home.py", label="Back to Home", icon='🏠')

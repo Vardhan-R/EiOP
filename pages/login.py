@@ -40,6 +40,6 @@ if "logged_in" in st.session_state:
 				else:
 					st.error("Incorrect username.")
 else:
-	st.write("Something's not right... please visit the homepage by clicking on the link below.")
+	st.error("Something's not right... please visit the homepage by clicking on the link below.")
 
-st.page_link("home.py", label="Back to Home", icon="🏠")
+st.page_link("home.py", label="Back to Home", icon='🏠')

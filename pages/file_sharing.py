@@ -17,7 +17,7 @@ with col_1:
 	st.title("Share Files")
 
 with col_2:
-	st.page_link("home.py", label="Back to Home", icon="🏠")
+	st.page_link("home.py", label="Back to Home", icon='🏠')
 
 col_1, col_2 = st.columns([1, 1])
 

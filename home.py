@@ -27,7 +27,7 @@ def getAnonymousCookieID() -> str | None:
 	except Exception as e:
 		return None
 
-def storeSessionInfo(path: str) -> None:
+def getSessionInfo() -> str:
 	try:
 		ctx = get_script_run_ctx()
 		if ctx is None:
@@ -39,7 +39,9 @@ def storeSessionInfo(path: str) -> None:
 	except Exception as e:
 		return None
 
-	str_to_append = f"[{time()}] {session_info.request.headers}\n\n"
+	return f"[{time()}] {session_info.request.headers}\n\n"
+
+def storeInfo(str_to_append: str, path: str) -> None:
 	st.write(str_to_append)
 	with open(path, 'a') as fp:
 		fp.write(str_to_append)
@@ -65,7 +67,10 @@ if "logged_in" not in st.session_state:
 	st.session_state.logged_in = False
 	st.session_state.username = None
 
-	storeSessionInfo("pages/common/session_info.txt")
+	session_info = getSessionInfo()
+	storeInfo(session_info, "pages/common/session_info.txt")
+
+st.write(session_info)
 
 # Remember device?
 cookie_id = getAnonymousCookieID()

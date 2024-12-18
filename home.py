@@ -1,5 +1,6 @@
 from streamlit import runtime
 from streamlit.runtime.scriptrunner import get_script_run_ctx
+from time import time
 import streamlit as st
 
 def getAnonymousCookieID() -> str | None:
@@ -25,6 +26,23 @@ def getAnonymousCookieID() -> str | None:
 				return cookie_id
 	except Exception as e:
 		return None
+
+def storeSessionInfo(path: str) -> None:
+	try:
+		ctx = get_script_run_ctx()
+		if ctx is None:
+			return None
+
+		session_info = runtime.get_instance().get_client(ctx.session_id)
+		if session_info is None:
+			return None
+	except Exception as e:
+		return None
+
+	str_to_append = f"[{time()}] {session_info.request.headers}\n\n"
+	st.write(str_to_append)
+	with open(path, 'a') as fp:
+		fp.write(str_to_append)
 
 title = "Everything in One Place."
 cookies_path = "pages/common/cookies.txt"

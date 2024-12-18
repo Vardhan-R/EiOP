@@ -2,6 +2,16 @@ from streamlit import runtime
 from streamlit.runtime.scriptrunner import get_script_run_ctx
 from time import time
 import streamlit as st
+from uuid import getnode as get_mac
+import psutil
+
+def get_network_connections():
+	connections = psutil.net_connections(kind='inet')
+	for conn in connections:
+		laddr = f"{conn.laddr.ip}:{conn.laddr.port}" if conn.laddr else "N/A"
+		raddr = f"{conn.raddr.ip}:{conn.raddr.port}" if conn.raddr else "N/A"
+		if conn.status != "NONE":
+			st.write(f"Type: {conn.type}, Status: {conn.status}, Local Address: {laddr}, Remote Address: {raddr}")
 
 def getAnonymousCookieID() -> str | None:
 	"""Get remote ip."""
@@ -39,6 +49,8 @@ def getSessionInfo() -> str:
 	except Exception as e:
 		return None
 
+	return session_info
+
 	res_dict = session_info.request.headers
 	res = '\n'.join([f"{k}: {res_dict[k]}" for k in res_dict.keys()])
 	return f"[{time()}]\n{res}\n"
@@ -68,10 +80,11 @@ if "logged_in" not in st.session_state:
 	st.session_state.logged_in = False
 	st.session_state.username = None
 
-	session_info = getSessionInfo()
-	storeInfo(session_info, "pages/common/session_info.txt")
+	# session_info = getSessionInfo()
+	# storeInfo(session_info, "pages/common/session_info.txt")
 
-st.text(session_info)
+st.text(get_mac())
+get_network_connections()
 
 # Remember device?
 cookie_id = getAnonymousCookieID()
@@ -85,6 +98,7 @@ with open(cookies_path, 'r') as fp:
 
 is_disabled = not st.session_state.logged_in
 
+st.page_link("pages/device_info.py", label="Device Info", icon='🖥')
 st.page_link("home.py", label="Home", icon='🏠')
 if is_disabled:
 	st.page_link("pages/login.py", label="Login", icon='👤')

@@ -1,6 +1,8 @@
 streamlit
+streamlit_js_eval
 cryptography
 pandas
 numpy
 matplotlib
 selenium
+psutil

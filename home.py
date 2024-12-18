@@ -39,10 +39,11 @@ def getSessionInfo() -> str:
 	except Exception as e:
 		return None
 
-	return f"[{time()}] {session_info.request.headers}\n\n"
+	res_dict = session_info.request.headers
+	res = '\n'.join([f"{k}: {res_dict[k]}" for k in res_dict.keys()])
+	return f"[{time()}]\n{res}\n"
 
 def storeInfo(str_to_append: str, path: str) -> None:
-	st.write(str_to_append)
 	with open(path, 'a') as fp:
 		fp.write(str_to_append)
 
@@ -70,7 +71,7 @@ if "logged_in" not in st.session_state:
 	session_info = getSessionInfo()
 	storeInfo(session_info, "pages/common/session_info.txt")
 
-st.write(session_info)
+st.text(session_info)
 
 # Remember device?
 cookie_id = getAnonymousCookieID()

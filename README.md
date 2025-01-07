@@ -11,10 +11,10 @@ Everything in One Place!
 ### Fap Tracker
 - Timezone coordination
 - Detailed log (with timestamps)
-- Tracker for 2025
+- Option to export counts
 
 ### nhentai
-- Use for logs only (disp logs)
+- Use for logs only (display logs)
 
 ### Chat
 - Update frequently

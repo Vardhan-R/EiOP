@@ -7,6 +7,7 @@ Everything in One Place!
 
 ### Login
 - "Remember me" (try using cookies)
+- Test persistent login
 
 ### Fap Tracker
 - Timezone coordination

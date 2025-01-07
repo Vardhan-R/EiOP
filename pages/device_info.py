@@ -23,6 +23,8 @@ device_info = streamlit_js_eval(
     """
 )
 
+st.page_link("home.py", label="Back to Home", icon='🏠')
+
 if device_info:
     st.subheader("Your Device Info:")
     st.json(device_info)

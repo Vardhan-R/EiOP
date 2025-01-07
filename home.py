@@ -83,8 +83,8 @@ if "logged_in" not in st.session_state:
 	# session_info = getSessionInfo()
 	# storeInfo(session_info, "pages/common/session_info.txt")
 
-st.text(get_mac())
-get_network_connections()
+# st.text(get_mac())
+# get_network_connections()
 
 # Remember device?
 cookie_id = getAnonymousCookieID()

@@ -1,8 +1,9 @@
 streamlit
+streamlit_cookies_manager
 streamlit_js_eval
 cryptography
-pandas
-numpy
 matplotlib
-selenium
+numpy
+pandas
 psutil
+selenium

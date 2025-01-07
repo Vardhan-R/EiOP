@@ -1,6 +1,7 @@
 from calendar import timegm
 from datetime import datetime
 from os.path import join
+from pages.common.cookies_manager import initCookies
 from matplotlib import colormaps
 from time import time
 import altair as alt
@@ -169,10 +170,17 @@ def renderTab(tracker: Tracker, yyyy_0: int, mm_0: int, dd_0: int, cnts_path: st
 
 				tracker.convertRawData(wa_chat_path, cnts_path, yyyy_0, mm_0, dd_0)
 
-st.set_page_config(page_title="Fap Tracker")
+# st.set_page_config(page_title="Fap Tracker")
 
-if "logged_in" in st.session_state:
-	if not st.session_state.logged_in:
+cookies = initCookies()
+
+# Ensure that the cookies are ready
+if not cookies.ready():
+	st.error("Cookies not initialised yet.")
+	st.stop()
+
+if "username" in cookies:
+	if not cookies["username"]:
 		st.switch_page("pages/403_forbidden.py")
 else:
 	st.switch_page("home.py")

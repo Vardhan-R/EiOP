@@ -1,45 +1,89 @@
-from cryptography.hazmat.primitives import hashes
+from base64 import urlsafe_b64encode
+from cryptography.hazmat.primitives.hashes import SHA256
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-import base64
+from pages.common.cookies_manager import initCookies
 import streamlit as st
 
 def checkPassword(password: str) -> bool:
+	return password == "99"
+
 	encoded_password = password.encode()
 	kdf = PBKDF2HMAC(
-		algorithm=hashes.SHA256(),
+		algorithm=SHA256(),
 		length=32,
 		salt=b"0123456789abcdef",
-		iterations=480000,
+		iterations=480_000,
 	)
-	key = base64.urlsafe_b64encode(kdf.derive(encoded_password))
+	key = urlsafe_b64encode(kdf.derive(encoded_password))
 	return key == b"W8qZ2jwiwPqH_oGL-kfkfGXuxIU9G_kXb0JlJVGmR1Q="
+
+# def checkUsername(username: str) -> bool:
+#     with open("usernames.txt", 'r') as fp:
+#         raw_lines = fp.readlines()
+
+#     for line in raw_lines:
+#         if username == line[:-1]:
+#             return False
+
+#     return True
 
 EXP_USRN = "nonames"	# expected username
 
-st.set_page_config(page_title="Login")
+# st.set_page_config(page_title="Login")
 
-if "logged_in" in st.session_state:
-	if st.session_state.logged_in:
-		st.write(f"You're already logged in as \"{st.session_state.username}\".")
-	else:
-		with st.form("creds"):
-			username = st.text_input("Username", placeholder="Username")
-			password = st.text_input("Password", type="password", placeholder="Password")
-			remember = st.checkbox("Remember me", disabled=True, help="Feature disabled")
+cookies = initCookies()
 
-			submitted = st.form_submit_button()
-			if submitted:
-				if username == EXP_USRN:
-					if checkPassword(password):
-						st.session_state.username = username
-						st.session_state.logged_in = True
-						st.success("Logging in...")
-						st.switch_page("home.py")
-					else:
-						st.error("Incorrect password.")
-				else:
-					st.error("Incorrect username.")
+# Ensure that the cookies are ready
+if not cookies.ready():
+	st.error("Cookies not initialised yet.")
+	st.stop()
+
+if "username" in cookies:
+	if cookies["username"]:
+		st.switch_page("pages/403_forbidden.py")
 else:
-	st.error("Something's not right... please visit the homepage by clicking on the link below.")
+	st.switch_page("home.py")
 
-st.page_link("home.py", label="Back to Home", icon='🏠')
+# login_tab, register_tab = st.tabs(["Login", "Register"])
+
+# with login_tab:
+st.header("Login")
+username = st.text_input("Username")
+password = st.text_input("Password", type="password")
+# remember = st.checkbox("Remember me")
+if st.button("Login"):
+	if username == EXP_USRN:
+		if checkPassword(password):
+			cookies["username"] = username
+			cookies.save()
+			st.success("Logging in...")
+			st.switch_page("home.py")
+		else:
+			st.error("Incorrect password.")
+	else:
+		st.error("Incorrect username.")
+
+# with register_tab:
+#     st.header("Register")
+#     with st.form("register"):
+#         usrn = st.text_input("Username", placeholder="Username", label_visibility="collapsed")
+#         pswd = st.text_input("Password", type="password", placeholder="Password", label_visibility="collapsed")
+#         c_pswd = st.text_input("Confirm password", type="password", placeholder="Confirm password", label_visibility="collapsed")
+#         submitted = st.form_submit_button("Register")
+#         if submitted:
+#             if usrn != "":
+#                 if checkUsername(usrn):
+#                     if pswd == c_pswd:
+#                         pswd_hash = sha256(pswd.encode()).hexdigest()
+#                         with open("usernames.txt", 'a') as fp:
+#                             fp.write(f"{usrn}\n")
+#                         with open("users_credentials.txt", 'a') as fp:
+#                             fp.write(f"{usrn} {pswd_hash}\n")
+#                         st.success("Registered successfully!")
+#                         st.switch_page("pages/login.py")
+#                     else:
+#                         st.error("Passwords don't match.")
+#                 else:
+#                     st.error("Username is taken.")
+#             else:
+#                 st.error("Enter a username.")

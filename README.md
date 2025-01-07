@@ -24,5 +24,6 @@ Everything in One Place!
 - Store the messages in a stack-like data structure
 
 ## New Stuff
+- Login/Register page
 - Stripchat scraper/logger
 - Gym tracker

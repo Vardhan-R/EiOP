@@ -1,4 +1,5 @@
 from os import chmod
+from pages.common.cookies_manager import initCookies
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -11,13 +12,20 @@ import time
 
 logs_path = "pages/common/logs"
 
-st.set_page_config(page_title="nhentai")
+# st.set_page_config(page_title="nhentai")
 
 # st.switch_page("pages/403_forbidden.py")
 # # THIS SCRIPT ESSENTIALLY ENDS HERE
 
-if "logged_in" in st.session_state:
-	if not st.session_state.logged_in:
+cookies = initCookies()
+
+# Ensure that the cookies are ready
+if not cookies.ready():
+	st.error("Cookies not initialised yet.")
+	st.stop()
+
+if "username" in cookies:
+	if not cookies["username"]:
 		st.switch_page("pages/403_forbidden.py")
 else:
 	st.switch_page("home.py")

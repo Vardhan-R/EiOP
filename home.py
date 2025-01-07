@@ -1,26 +1,16 @@
 from pages.common.cookies_manager import initCookies
 import streamlit as st
-import time
 
 title = "Everything in One Place."
 
 # st.set_page_config(page_title="Home")
 
 cookies = initCookies()
-# wait_iters = 50
 
 # Ensure that the cookies are ready
 if not cookies.ready():
 	st.error("Cookies not initialised yet.")
 	st.stop()
-
-# for _ in range(wait_iters):
-# 	if cookies.ready():
-# 		break
-# 	time.sleep(0.1)
-# else:
-# 	st.error("Cookies not initialised yet.")
-# 	st.stop()
 
 st.title(title)
 

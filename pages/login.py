@@ -5,8 +5,6 @@ from pages.common.cookies_manager import initCookies
 import streamlit as st
 
 def checkPassword(password: str) -> bool:
-	return password == "99"
-
 	encoded_password = password.encode()
 	kdf = PBKDF2HMAC(
 		algorithm=SHA256(),
@@ -18,14 +16,14 @@ def checkPassword(password: str) -> bool:
 	return key == b"W8qZ2jwiwPqH_oGL-kfkfGXuxIU9G_kXb0JlJVGmR1Q="
 
 # def checkUsername(username: str) -> bool:
-#     with open("usernames.txt", 'r') as fp:
-#         raw_lines = fp.readlines()
+# 	with open("usernames.txt", 'r') as fp:
+# 		raw_lines = fp.readlines()
 
-#     for line in raw_lines:
-#         if username == line[:-1]:
-#             return False
+# 	for line in raw_lines:
+# 		if username == line[:-1]:
+# 			return False
 
-#     return True
+# 	return True
 
 EXP_USRN = "nonames"	# expected username
 
@@ -64,26 +62,26 @@ if st.button("Login"):
 		st.error("Incorrect username.")
 
 # with register_tab:
-#     st.header("Register")
-#     with st.form("register"):
-#         usrn = st.text_input("Username", placeholder="Username", label_visibility="collapsed")
-#         pswd = st.text_input("Password", type="password", placeholder="Password", label_visibility="collapsed")
-#         c_pswd = st.text_input("Confirm password", type="password", placeholder="Confirm password", label_visibility="collapsed")
-#         submitted = st.form_submit_button("Register")
-#         if submitted:
-#             if usrn != "":
-#                 if checkUsername(usrn):
-#                     if pswd == c_pswd:
-#                         pswd_hash = sha256(pswd.encode()).hexdigest()
-#                         with open("usernames.txt", 'a') as fp:
-#                             fp.write(f"{usrn}\n")
-#                         with open("users_credentials.txt", 'a') as fp:
-#                             fp.write(f"{usrn} {pswd_hash}\n")
-#                         st.success("Registered successfully!")
-#                         st.switch_page("pages/login.py")
-#                     else:
-#                         st.error("Passwords don't match.")
-#                 else:
-#                     st.error("Username is taken.")
-#             else:
-#                 st.error("Enter a username.")
+# 	st.header("Register")
+# 	with st.form("register"):
+# 		usrn = st.text_input("Username", placeholder="Username", label_visibility="collapsed")
+# 		pswd = st.text_input("Password", type="password", placeholder="Password", label_visibility="collapsed")
+# 		c_pswd = st.text_input("Confirm password", type="password", placeholder="Confirm password", label_visibility="collapsed")
+# 		submitted = st.form_submit_button("Register")
+# 		if submitted:
+# 			if usrn != "":
+# 				if checkUsername(usrn):
+# 					if pswd == c_pswd:
+# 						pswd_hash = sha256(pswd.encode()).hexdigest()
+# 						with open("usernames.txt", 'a') as fp:
+# 							fp.write(f"{usrn}\n")
+# 						with open("users_credentials.txt", 'a') as fp:
+# 							fp.write(f"{usrn} {pswd_hash}\n")
+# 						st.success("Registered successfully!")
+# 						st.switch_page("pages/login.py")
+# 					else:
+# 						st.error("Passwords don't match.")
+# 				else:
+# 					st.error("Username is taken.")
+# 			else:
+# 				st.error("Enter a username.")

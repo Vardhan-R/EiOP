@@ -6,7 +6,7 @@ title = "Everything in One Place."
 # st.set_page_config(page_title="Home")
 
 cookies = initCookies()
-wait_iters = 10
+wait_iters = 1000
 
 # Ensure that the cookies are ready
 for _ in range(wait_iters):

@@ -5,7 +5,7 @@ title = "Everything in One Place."
 
 # st.set_page_config(page_title="Home")
 
-cookies = initCookies()
+cookies = initCookies(100)
 
 # Ensure that the cookies are ready
 if not cookies.ready():

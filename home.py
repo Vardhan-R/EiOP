@@ -7,16 +7,20 @@ title = "Everything in One Place."
 # st.set_page_config(page_title="Home")
 
 cookies = initCookies()
-wait_iters = 10
+# wait_iters = 50
 
 # Ensure that the cookies are ready
-for _ in range(wait_iters):
-	if cookies.ready():
-		break
-	time.sleep(0.3)
-else:
+if not cookies.ready():
 	st.error("Cookies not initialised yet.")
 	st.stop()
+
+# for _ in range(wait_iters):
+# 	if cookies.ready():
+# 		break
+# 	time.sleep(0.1)
+# else:
+# 	st.error("Cookies not initialised yet.")
+# 	st.stop()
 
 st.title(title)
 
